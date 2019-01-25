@@ -110,15 +110,20 @@ twoway (histogram logi), by (regurb)
 
 twoway (scatter logw logi) (lfit logw logi), by(region)
 twoway (scatter logc logi) (lfit logc logi), by(region)
+twoway (scatter inmar logi) (lfit inmar logi), by(region)
 
 twoway (scatter logw logi) (lfit logw logi), by(regurb)
 twoway (scatter logc logi) (lfit logc logi), by(regurb)
+twoway (scatter inmar logi) (lfit inmar logi), by(regurb)
 
+gen ii = linmar / logi
 twoway (scatter ci logi) (lfit ci logi), by(region)
 twoway (scatter wi logi) (lfit wi logi), by(region)
+twoway (scatter ii logi) (lfit ii logi), by(region)
 
 twoway (scatter ci logi) (lfit ci logi), by(regurb)
 twoway (scatter wi logi) (lfit wi logi), by(regurb)
+twoway (scatter ii logi) (lfit ii logi), by(regurb)
 
 *ssc inst crossplot
 cpcorr logc logi logw \ logc logi logw if regionid == 1
