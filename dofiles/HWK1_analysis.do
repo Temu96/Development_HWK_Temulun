@@ -1,5 +1,5 @@
 *****************************************
-*
+* HWK1
 *****************************************
 
 use "E:\Uganda_ISA_LSMS\13-14\UGA_2013_UNPS_v01_M_STATA8\UGA_2013_UNPS_v01_M_STATA8\CIWtotal.dta" 
@@ -8,8 +8,11 @@ destring urbanid, replace
 tostring region, gen(regionid)
 destring regionid, replace
 
+*****************************************
 * Question 1
 * 
+
+
 *inequality ratio
 gen ci = logc/logi
 gen wi = logw/logi
@@ -77,6 +80,31 @@ est store c4
 pshare estimate w, pvar(i)
 est store w4
 esttab c4 w4 using q_all.csv
+
+
+********************************************************
+* Question 2
+*
+
+gen linmar = log(inmar)
+gen lexmar = log(exmar)
+tabstat inmar exmar, by (urban) stat(mean)
+tabstat linmar lexmar, by (urban) stat(variance)
+
+twoway (hist linmar if urbanid == 1, color(blue))(hist linmar if urbanid == 0, color(red)), legend(order(1 "Urban" 2 "Rural"))
+twoway (hist lexmar if urbanid == 1, color(blue))(hist lexmar if urbanid == 0, color(red)), legend(order(1 "Urban" 2 "Rural"))
+
+cpcorr linmar \ logc logi logw
+cpcorr linmar \ logc logi logw if urbanid == 1
+cpcorr linmar \ logc logi logw if urbanid == 0
+
+
+
+
+
+********************************************************
+* Question 3
+*
 
 twoway (histogram logi), by (regurb)
 

@@ -4,7 +4,7 @@
 
 ***** Labor *****
 
-use "D:\CEMFI\Development\HW1\Data\GSEC8_1.dta", clear
+use "E:\Uganda_ISA_LSMS\13-14\UGA_2013_UNPS_v01_M_STATA8\UGA_2013_UNPS_v01_M_STATA8\GSEC8_1.dta", clear
 
 ** Labor participation
 
@@ -16,9 +16,10 @@ use "D:\CEMFI\Development\HW1\Data\GSEC8_1.dta", clear
 // from 14751 samples, 11790 are 10 years old or above
 summarize h8q4 h8q6 h8q8 h8q10 h8q12
 generate Work_7 = 3 if  h8q4==.
-replace  Work_7 = 0 if (h8q4==2&h8q6==2&h8q8==2&h8q10==2&h8q12==2)
+replace  Work_7 = 0 if (h8q4==2&h8q6==2&h8q8==2&h8q10==2&h8q12==2)  
 replace  Work_7 = 1 if (Work_7!=0&Work_7!=2 )
 replace  Work_7 = 2 if (h8q16==2&h8q17==2)
+
 
 /* 
 . tab Work_7
@@ -33,6 +34,9 @@ replace  Work_7 = 2 if (h8q16==2&h8q17==2)
       Total |     14,751      100.00
 
 */
+
+* intensive margin: avg hour/worker
+* extensive margin: employment rate
 
 summarize h8q5 h8q7 h8q9 h8q11 h8q13
 generate Work_12 = 3 if  h8q5==.
@@ -147,7 +151,46 @@ label variable thour "total working hours per week"
 label variable Work_12 "last 12 months, work participation"
 label variable Work_7 "last 7 days, work participation"
 
-save "D:\CEMFI\Development\HW1\Data\labordata.dta",replace
+save "E:\Uganda_ISA_LSMS\13-14\UGA_2013_UNPS_v01_M_STATA8\UGA_2013_UNPS_v01_M_STATA8\labordata.dta",replace
+
+
+************************************************
+* intensive margin
+
+bys HHID: gen pop=_N
+bys HHID: gen tot = sum(thour)
+collapse (sum)thour (mean)pop, by (HHID)
+
+gen inmar = thour / pop
+save inmar, replace
+
+
+************************************************
+* extensive margin
+
+gen workyes = 1 if Work_12 == 1
+replace workyes = 0 if Work_12 != 1
+bys HHID: gen worksum = _N
+collapse (sum)workyes (mean)worksum, by (HHID)
+gen exmar = workyes/worksum
+save exmar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
