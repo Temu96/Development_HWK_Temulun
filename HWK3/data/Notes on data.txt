@@ -1,0 +1,7 @@
+# dataUGA.dta
+
+# coeff1
+estimates from household level regression
+
+# coeff2
+estimates from household level regrssion separating rural and urban
