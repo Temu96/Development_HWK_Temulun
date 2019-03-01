@@ -6,3 +6,9 @@
 4. Data has not been converted to USD.
 
 # Development_HWK2
+
+
+# Development_HWK3
+
+1. Credits for sharing data (dataUGA.dta) goes to Javier Garcia-Brazales Sierra.
+2. .do files also include selective regression results.
