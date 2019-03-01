@@ -12,3 +12,4 @@
 
 1. Credits for sharing data (dataUGA.dta) goes to Javier Garcia-Brazales Sierra.
 2. .do files also include selective regression results.
+3. Graphs for distribution are truncated at both the top and the bottom. 
